@@ -2,6 +2,11 @@
 #define MEMORY_MANAGER_H
 
 #include <stddef.h> // For size_t
+#include <stdbool.h> // For the "standard bool"
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <math.h>
 
 // Helps C++ compilers to handle C header files
 #ifdef __cplusplus
@@ -9,6 +14,11 @@ extern "C"
 {
 #endif
 
+    typedef struct memoryBlock{  // strukt of the layout of a block
+    void* start; // points to where the memory block starts
+    size_t blocksize; // the size of memory
+    bool taken; // if it is occupied
+    } memoryBlock;
     /**
      * Initializes the memory manager with a specified size of memory pool.
      * The memory pool could be any data structure, for instance, a large array
@@ -53,6 +63,7 @@ extern "C"
      */
     void mem_deinit();
 
+    void blockExpand();
 #ifdef __cplusplus
 }
 #endif
